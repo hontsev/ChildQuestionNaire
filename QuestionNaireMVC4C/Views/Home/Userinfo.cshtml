@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "个人信息";
+    Layout = "~/Views/_Layout.cshtml";
+}
+<div class="col-lg-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            个人信息
+        </div>
+        <div class="panel-body">
+            <div class="col-md-4"><label>用户名：</label></div>
+            <div class="col-md-8"><label>@Session["name"]</label></div>
+            <div class="col-md-4"><label>用户类型：</label></div>
+            <div class="col-md-8"><label>管理员</label></div>
+            <div class="col-md-4"><label>修改密码：</label></div>
+            <div class="col-md-4">
+                <form id="changePwForm" method="post" action="@Url.Action("ChangePw", "Home")">
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="col-md-4">旧密码：</div>
+                            <div class="col-md-8"><input name="oldPw" type="password" /></div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4">新密码：</div>
+                            <div class="col-md-8"><input name="newPw" type="password" /></div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4">重复新密码：</div>
+                            <div class="col-md-8"><input name="newPw2" type="password" /></div>
+
+                        </div>
+                    </fieldset>
+                </form>
+                <button class="btn btn-primary" onclick="changePw()"> 修改密码 </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        function changePw() {
+            oldPw = $("input[name='oldPw']").val();
+            newPw = $("input[name='newPw']").val();
+            newPw2 = $("input[name='newPw2']").val();
+            if (oldPw.length <= 0 || newPw.length <= 0) {
+                alert("请输入旧密码和新密码。");
+            } else if (newPw != newPw2) {
+                alert("两次新密码输入不一致。");
+            } else {
+                $("#changePwForm").submit();
+            }
+        }
+    </script>

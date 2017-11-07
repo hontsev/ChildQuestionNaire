@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "测评列表";
+    Layout = "~/Views/_Layout.cshtml";
+}
+<div class="col-lg-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @ViewBag.Title
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <div class="dataTable_wrapper">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                        <tr>
+                            <th>测评名</th>
+                            <th>测评简介</th>
+                            <th>管理</th>
+                            @*<th>统计</th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var q in ViewBag.questions)
+                        {
+                            <tr class="odd gradeX">
+                                <td>@q[1]</td>
+                                <td>@q[2]</td>
+                                <td>
+                                    <div class="btn-group">
+                                        @{
+
+                                @Html.Raw("<a href='" + Url.Action("AddQn", "Admin", new { id = q[0] }) + "' class='btn btn-primary btn-sm'>修改</a>")
+                                @Html.Raw("<a href='javascript:deleteQn(\"" + Url.Action("DeleteQn", "Admin", new { id = q[0] }) + "\")' class='btn btn-danger btn-sm'>删除</a>")
+
+                                @Html.Raw("<a href='" + Url.Action("CheckQnPublish", "Admin", new { id = q[0] }) + "' class='btn btn-default btn-sm' target='_blank'>查看发布信息</a>")
+                                        }
+                                                                               
+                                    </div>
+
+                                </td>
+
+                                @*<td>
+                                    <div class="btn-group">
+                                        <a href="@Url.Action("CheckQnResult", "Admin", new { id = q[0] })" class="btn btn-info btn-sm" target="_blank">统计结果</a>
+                                    </div>
+
+                                </td>*@
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>
+<!-- /.col-lg-12 -->
+<link href="@Url.Content("~/bower_components/datatables/media/css/jquery.dataTables.min.css")" rel="stylesheet">
+<link href="@Url.Content("~/bower_components/datatables/media/css/jquery.dataTables_themeroller.css")" rel="stylesheet">
+<link href="@Url.Content("~/bower_components/datatables-responsive/css/dataTables.responsive.css")" rel="stylesheet">
+<script src="@Url.Content("~/bower_components/datatables/media/js/jquery.dataTables.min.js")"></script>
+<script src="@Url.Content("~/bower_components/datatables-responsive/js/dataTables.responsive.js")"></script>
+<script src="@Url.Content("~/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js")"></script>
+<script>
+
+    $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            bAutoWidth: false,
+            responsive: true,
+            "oLanguage": {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "每页显示：_MENU_",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项", "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上一页",
+                    "sNext": "下一页",
+                    "sLast": "末页"
+                }
+            }
+        });
+    });
+
+
+
+
+
+    function deleteQn(url) {
+        if (confirm("真的要删除此测评吗？该操作无法恢复。")) {
+            self.location = url;
+        }
+    }
+
+</script>
+
+
+
+

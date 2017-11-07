@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "管理员首页";
+    Layout = "~/Views/_Layout.cshtml";
+}
+<div class="col-lg-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            个人信息
+        </div>
+        <div class="panel-body">
+            <div class="col-md-4"><label>用户名：</label></div>
+            <div class="col-md-8"><label>@Session["name"]</label></div>
+            <div class="col-md-4"><label>用户类型：</label></div>
+            <div class="col-md-8"><label>管理员</label></div>
+        </div>
+    </div>
+</div>

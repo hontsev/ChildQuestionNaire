@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "编辑测评";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                @ViewBag.Title
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-10">
+                        <form id="qncontent" role="form" action="/Admin/UploadQuestion" method="post" enctype="multipart/form-data">
+                            <input type="hidden" id="qn_id" name="qn_id" value="@{ if (!object.Equals(ViewBag.qn, null)) { @ViewBag.qn.id  }}" />
+                            <div class="form-group">
+                                <label>测评标题</label>
+                                <input class="form-control" id="qn_title" value="@{ if (!object.Equals(ViewBag.qn, null)) { @ViewBag.qn.title  } }">
+
+                            </div>
+                            <div class="form-group">
+                                <label>测评简介</label>
+                                <textarea class="form-control" rows="6" id="qn_introduction">@{if (!object.Equals(ViewBag.qn, null)){@ViewBag.qn.introduction}}</textarea>
+                            </div>
+                            @{
+                                if (!object.Equals(ViewBag.qn, null))
+                                {
+                                    if (!object.Equals(ViewBag.qn.id, null))
+                                    {
+                                    <div class="form-group">
+                                        <label>问题列表</label>
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+
+                                                <div class="form-group">
+                                                    <label>上传题目信息</label>
+                                                    <a target="_blank" href="/题目添加模板.xls">模板下载</a>
+                                                    <input type="file" name="file" />
+                                                    <input type="submit" class="btn btn-primary" value="上传" />
+                                                </div>
+                                                <a class="btn btn-danger" href="/Admin/ClearQuestions/@ViewBag.qn.id">清空全部题目</a>
+                                            </div>
+                                            <div class="panel-body">
+                                                <table class="table table-striped">
+                                                    <colgroup>
+                                                        <col style="width:30%" />
+                                                        <col style="width:10%" />
+                                                        <col style="width:10%" />
+                                                        <col style="width:30%" />
+                                                        <col style="width:12%" />
+                                                    </colgroup>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>描述</th>
+                                                            <th>类型</th>
+                                                            <th>年龄段</th>
+                                                            <th>选项</th>
+                                                            <th>各选项得分</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="table_body">
+                                        @{
+                                            foreach (var q in ViewBag.qn.questions)
+                                            {
+                                                @Html.Raw("<tr><td>" + q.introduction + "</td><td>" + q.type + "</td><td>" + q.age + "</td><td>" + q.options + "</td><td>" + q.scores + "</td></tr>");
+                                            }
+                                        }
+                                                        
+                                                        @*<tr>
+                                                                <td>Sachin</td>
+                                                                <td>Mumbai</td>
+                                                                <td>400003</td>
+                                                            </tr>*@
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                }
+                            }
+                            
+                            <a href="javascript:saveQn(true)" class="btn btn-lg btn-primary" style="min-width:150px">保存</a>
+                            <button class="btn btn-lg btn-default" style="min-width:150px" onclick="history.go(-1)">返回</button>
+                        </form>
+                    </div>
+
+                </div>
+                <!-- /.row (nested) -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+
+
+<script>
+
+    //保存问卷
+    function saveQn(refresh) {
+        var res = {
+            id:$("#qn_id").val(),
+            title: $("#qn_title").val(),
+            introduction: $("#qn_introduction").val(),
+        };
+        console.log(res); //return;
+        $.ajax({
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            url: '@Url.Action("SaveQn","Admin")',
+            data: JSON.stringify(res),
+            //async: false,
+            success: function (data) {
+                console.log(data.responseText);
+                if (data.responseText == "Success") {
+                    if (refresh==true)
+                    window.location.href = "@Url.Action("CheckQn","Admin")";
+                }
+                //console.debug(data);
+            },
+            error: function (data) {
+                console.log(data.responseText);
+                if (data.responseText == "Success") {
+                    if (refresh==true)
+                    window.location.href = "@Url.Action("CheckQn","Admin")";
+                }
+                //console.debug(data);
+            }
+        });
+    }
+
+
+
+    @*$(function () {
+        @{
+            if (!object.Equals(ViewBag.qn, null))
+            {
+                if (!object.Equals(ViewBag.qn.id,null))
+                {
+                    @Html.Raw("$('#qn_id').val('" + ViewBag.qn.id + "');");
+                }
+
+            }
+        }
+    });*@
+</script>

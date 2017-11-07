@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "测评信息";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<div class="col-lg-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @ViewBag.Title
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item">测评名称：@ViewBag.qnname</li>
+                <li class="list-group-item">测评网址：<a id="url" target="_blank" href="@ViewBag.qnurl" style="word-break:break-all;">@ViewBag.qnurl</a></li>
+                <li class="list-group-item">
+                    <p class="text-center" id="code"></p>
+
+
+                </li>
+
+            </ul>
+
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>
+
+<script src="@Url.Content("~/Scripts/jquery.qrcode.min.js")"></script>
+<script>
+
+    function getRootPath() {
+        var strFullPath = window.document.location.href;
+        var strPath = window.document.location.pathname;
+        var pos = strFullPath.indexOf(strPath);
+        var prePath = strFullPath.substring(0, pos);
+        var postPath = strPath.substring(0, strPath.substr(1).indexOf('/') + 1);
+        return (prePath);
+    }
+
+    $(function () {
+        var p2 = $("#url").text();
+        var fullpath = getRootPath() + p2;
+        $("#url").text(fullpath);
+        $("#code").empty();
+        $("#code").qrcode({
+            render: "canvas",
+            width: 250,
+            height: 250,
+            text: fullpath
+        });
+    })
+</script>

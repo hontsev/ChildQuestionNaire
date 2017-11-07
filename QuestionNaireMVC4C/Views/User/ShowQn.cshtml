@@ -1,0 +1,200 @@
+﻿@{
+    ViewBag.Title = "测评";
+    Layout = "~/Views/_Layout_user.cshtml";
+}
+    <div class="col-lg-12">
+        <div class="panel panel-success">
+            <div class="panel-heading" style="font-size:26px;font-weight:bold;text-align:center">
+                @ViewBag.qn.title
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" action="/User/Result" method="post" id="form1">
+                            <input type="hidden" name="title" value="@ViewBag.qn.title" />
+                            <input type="hidden" name="score" value="" id="score" />
+                            <input type="hidden" id="qn_id" value="" />
+                            <div class="form-group">
+                                <div class="panel panel-success">
+                                    <div class="panel-body">
+                                        <div id="questions">
+                                            @*<div class="panel-default">
+                                                    <div class="panel panel-heading">
+                                                        第 <label>1</label> 题 - 单选题
+                                                    </div>
+                                                    <div class="panel panel-body">
+                                                        <h4>阿萨德爱的撒旦的 撒旦 的？</h4>
+                                                        <div class="col-lg-10">
+                                                            <div class="radio"><label><input type="radio" name="qn_1" value="1">阿萨德爱的撒旦的，撒1</label></div>
+                                                            <div class="radio"><label><input type="radio" name="qn_1" value="2">阿萨德爱的撒旦的，撒2</label></div>
+                                                            <div class="radio"><label><input type="radio" name="qn_1" value="3">阿萨德爱的撒旦的，撒3</label></div>
+                                                            <div class="radio"><label><input type="radio" name="qn_1" value="4">阿萨德爱的撒旦的，撒4</label></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-default">
+                                                    <div class="panel panel-heading">
+                                                        第 <label>1</label> 题 - 多选题
+                                                    </div>
+                                                    <div class="panel panel-body">
+                                                        <h4>阿萨德爱的撒旦的 撒旦 的？</h4>
+                                                        <div class="col-lg-10">
+                                                            <div class="checkbox"><label><input type="checkbox" value="1">阿萨德爱的撒旦的，撒1</label></div>
+                                                            <div class="checkbox"><label><input type="checkbox" value="2">阿萨德爱的撒旦的，撒2</label></div>
+                                                            <div class="checkbox"><label><input type="checkbox" value="3">阿萨德爱的撒旦的，撒3</label></div>
+                                                            <div class="checkbox"><label><input type="checkbox" value="4">阿萨德爱的撒旦的，撒4</label></div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="panel-default">
+                                                    <div class="panel panel-heading">
+                                                        第 3 题 - 简答题
+                                                    </div>
+                                                    <div class="panel panel-body">
+                                                        <h4>阿萨德爱的撒旦的 撒旦 的？</h4>
+                                                        <textarea class="form-control" rows="5"></textarea>
+                                                    </div>
+
+                                                </div>
+                                                <div class="panel-default">
+                                                    <div class="panel panel-heading">
+                                                        第 4 题 - 矩阵单选题
+                                                    </div>
+                                                    <div class="panel panel-body">
+                                                        <h4>评价各位老师？</h4>
+                                                        <table class="table table-striped table-bordered table-hover" style="text-align: center;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td>非常满意</td>
+                                                                    <td>满意</td>
+                                                                    <td>一般</td>
+                                                                    <td>不满意</td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>老王</td>
+                                                                    <td><input type="radio" style="zoom:200%" name="qn_1" value="1"></td>
+                                                                    <td><input type="radio" style="zoom:200%" name="qn_1" value="1"></td>
+                                                                    <td><input type="radio" style="zoom:200%" name="qn_1" value="1"></td>
+                                                                    <td><input type="radio" style="zoom:200%" name="qn_1" value="1"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="javascript:saveQn()" class="btn btn-lg  btn-success" style="min-width:150px;margin-left:40%">完成</a>
+                        </form>
+                    </div>
+
+                </div>
+                <!-- /.row (nested) -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+
+
+<script>
+
+
+
+
+
+    function printQuestion(id, type, title, options) {
+
+        var q = $("#questions");
+        var num = q.find(".panel-success").length;
+        //console.log(num);
+        num += 1;
+        //console.log(type);
+
+        elem = "";
+        elem += '<div class="panel-success" qid="' + id + '">';
+        elem += '<div class="panel panel-heading">' + '第 <label>' + num + '</label> 题<font color="gray">(' + type + ')</font>' + '</div>';
+        elem += '<div class="panel panel-body">';
+        elem += '<h4>' + title + '</h4>';
+        var items = options.split(",");
+        for (i = 1; i <= items.length; i++) {
+            elem += '<div class="radio col-lg-4"><label><input type="radio" name="q_' + id + '" value="' + i + '">' + items[i - 1] + '</label></div>';
+        }
+        elem += '</div>';
+        elem += '</div>';
+        q.append(elem);
+
+    }
+
+    //保存问卷
+    function saveQn() {
+
+        var as = new Array();
+        var finish = true;
+        $("#questions").find(".panel-success").each(function () {
+            var a = new Object();
+            a.answer = "";
+            id = $(this).attr("qid");
+            a.qid = id;
+            console.log(id);
+            input = $(this).find("input[name='q_" + id + "']:checked").first().val();
+            a.answer = input;
+            if (typeof (input) == "undefined" || input.length <= 0 || input.indexOf("undefine") != -1) {
+                alert("请完成全部问题！");
+                finish = false;
+                return false;
+            }
+            as.push(a);
+        });
+
+        if (!finish) return false;
+
+        //console.log(as);
+
+        //var res = {
+        //    ass: as
+        //};
+        //console.log(res); //return;
+
+        url1="@Url.Action("Result", "User")";
+
+        $.ajax({
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            url: '@Url.Action("SubmitQn","User")',
+            data: JSON.stringify(as),
+            success: function (data) {
+                console.log("good");
+                $("#score").val(data);
+                $("#form1").submit();
+                //window.location.href = url1+"?title="+data.title+"&score="+data.score+"&introduction="+data.introduction;
+
+            }
+        });
+    }
+
+
+    
+    $(function () {
+        @{
+            if (!object.Equals(ViewBag.qn, null))
+            {
+                @Html.Raw("$('#qn_id').val('" + ViewBag.qn.id + "');");
+                @Html.Raw("$('#qn_title').val('" + ViewBag.qn.title + "');");
+                @Html.Raw("$('#qn_introduction').val('" + ViewBag.qn.introduction + "');");
+                foreach (var q in ViewBag.qn.questions)
+                {
+                    @Html.Raw("printQuestion('" + q.id + "','" + q.type + "','" + q.introduction + "','" + q.options + "');");
+                }
+            }
+        }
+    });
+</script>

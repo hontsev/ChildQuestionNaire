@@ -1,0 +1,59 @@
+﻿@{
+    //ViewBag.Title = "测评结果";
+    Layout = "~/Views/_Layout_user.cshtml";
+}
+    <div class="col-lg-12">
+        <div class="panel panel-success">
+            <div class="panel-heading" style="font-size:26px;font-weight:bold;text-align:center">
+                @ViewBag.title 测评结果
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form id="form1" role="form" >
+                            <div class="form-group">
+                                <table class="table table-bordered">
+                                    <colgroup>
+                                        <col style="width:10%" />
+                                        <col style="width:45%" />
+                                        <col style="width:45%" />
+                                    </colgroup>
+                                    <thead>
+                                        <tr class="warning">
+                                            <th></th>
+                                            <th>评估结果</th>
+                                            <th>专家建议</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="warning">
+                                            <td>逻辑能力</td>
+                                            <td>@ViewBag.s11</td>
+                                            <td>@ViewBag.s12</td>
+                                        </tr>
+                                        <tr class="warning">
+                                            <td>语言能力</td>
+                                            <td>@ViewBag.s21</td>
+                                            <td>@ViewBag.s22</td>
+                                        </tr>
+                                        <tr class="warning">
+                                            <td>理解能力</td>
+                                            <td>@ViewBag.s31</td>
+                                            <td>@ViewBag.s32</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <a href="javascript:location.href='/User/CheckQn'" class="btn btn-lg  btn-default" style="min-width:150px;margin-left:40%">返回</a>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+
+
